@@ -1,0 +1,106 @@
+                        FIFA World Cup Predictor
+================================================================================
+
+                         Historical FIFA Data Sources
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │  • FIFA Match Results                                                       │
+ │  • Elo Ratings                                                              │
+ │  • FIFA Rankings                                                            │
+ │  • World Cup Results                                                        │
+ │  • Confederation Information                                                │
+ │  • Host Nation Information                                                  │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                     Data Processing & Feature Engineering
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │  • Qualification Statistics                                                 │
+ │  • Previous World Cup Progress                                              │
+ │  • Elo Rating Integration                                                   │
+ │  • FIFA Ranking Integration                                                 │
+ │  • Confederation Encoding                                                   │
+ │  • Host Feature                                                             │
+ │  • Data Cleaning & Validation                                               │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                          Final Training Dataset
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │  Team │ Elo │ FIFA Rank │ Qualification Stats │ Previous WC │ ... │ Winner  │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                        Feature Selection (Experiment 2)
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │  Removed low-impact features based on feature importance analysis           │
+ │                                                                             │
+ │  Remaining features used for final training                                 │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                      Leave-One-World-Cup-Out Evaluation
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │          2006   2010   2014   2018   2022                                   │
+ │           ▲      ▲      ▲      ▲      ▲                                     │
+ │           │      │      │      │      │                                     │
+ │   Train on all other tournaments → Test on held-out World Cup               │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                          Machine Learning Models
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │   • Logistic Regression                                                     │
+ │   • Random Forest                                                           │
+ │   • XGBoost                                                                 │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                         Model Comparison & Selection
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │  Compare using:                                                             │
+ │      • Champion Prediction Accuracy                                         │
+ │      • Top-3 Champion Ranking                                               │
+ │      • Average F1 Score                                                     │
+ │      • Average Champion Rank                                                │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                          2026 Prediction Pipeline
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │  2026 Team Statistics                                                       │
+ │        │                                                                    │
+ │        ▼                                                                    │
+ │  Same Feature Engineering                                                   │
+ │        │                                                                    │
+ │        ▼                                                                    │
+ │  Trained Models                                                             │
+ │        │                                                                    │
+ │        ▼                                                                    │
+ │  Champion Probabilities                                                     │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                               Final Output
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                                                                             │
+ │  • Ranked teams                                                             │
+ │  • Champion probabilities                                                   │
+ │  • Predicted FIFA World Cup Champion                                        │
+ │                                                                             │
+ └─────────────────────────────────────────────────────────────────────────────┘
