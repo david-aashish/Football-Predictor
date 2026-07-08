@@ -1,175 +1,256 @@
-# FIFA World Cup Winner Prediction using Machine Learning
+# FIFA World Cup Prediction using Machine Learning & AI
 
 ## Overview
 
-This project predicts the winner of the FIFA World Cup using Machine Learning techniques. Historical data from the FIFA World Cups (2006–2022) was collected, cleaned, engineered into meaningful features, and used to train multiple classification models. The trained models were then used to predict the winner of the 2026 FIFA World Cup.
+This project predicts the FIFA World Cup champion using Machine Learning and Artificial Intelligence.
 
-The project follows a complete Machine Learning pipeline including data collection, preprocessing, feature engineering, model training, evaluation, feature selection, hyperparameter tuning, and final prediction.
+The project is being developed in multiple stages.
 
----
+The first stage predicts the tournament winner **before the World Cup begins** using historical data.
 
-## Objectives
+Later stages introduce a live tournament engine, dynamic prediction updates after every match, tournament simulation, and an AI explanation system.
 
-* Build a historical FIFA World Cup dataset.
-* Engineer meaningful features representing team strength.
-* Compare multiple Machine Learning algorithms.
-* Perform feature ablation experiments.
-* Tuning Hyperparameters
-* Evaluate models using Leave-One-World-Cup-Out Cross Validation.
-* Predict the 2026 FIFA World Cup champion.
+The long-term goal is to build a complete intelligent World Cup prediction platform.
 
 ---
 
-## Dataset
+# Project Roadmap
 
-The dataset was created by combining information from multiple publicly available football datasets.
+## ✅ Stage 1 — Static World Cup Prediction
 
-### Data Sources
+Completed
 
-* World Cup Results
-* International Match Results
-* Elo Ratings
-* FIFA Rankings
-* Qualification Matches
+Predict the FIFA World Cup winner before the tournament begins using historical data.
+
+Implemented:
+
+- Historical dataset construction
+- Feature engineering
+- Feature selection
+- Hyperparameter tuning
+- Model comparison
+- Leave-One-World-Cup-Out Cross Validation
+- 2026 World Cup prediction
+
+---
+
+## ✅ Stage 2A — Generic Live Tournament Engine
+
+Completed
+
+Built a generic live tournament update system capable of updating team information after every completed World Cup match.
+
+Implemented:
+
+- Generic tournament configuration using YAML
+- Tournament state management
+- Dynamic Elo updates
+- Tournament statistics tracking
+- Live form tracking
+- Knockout elimination handling
+- Feature regeneration after every match
+- CLI interface
+- Batch match replay
+- Unit and integration testing
+
+The architecture is tournament-independent and can be reused for future World Cups with only configuration changes.
+
+---
+
+## 🔄 Stage 2B — Dynamic Re-Prediction
+
+Planned
+
+After every completed World Cup match:
+
+- Update live features
+- Re-run prediction models
+- Generate new championship probabilities
+- Save probability snapshots over time
+
+---
+
+## ⏳ Stage 2C — Visualization
+
+Planned
+
+Visualize how championship probabilities evolve throughout the tournament.
+
+---
+
+## ⏳ Stage 3 — Match Prediction
+
+Planned
+
+Predict individual match outcomes using Machine Learning.
+
+---
+
+## ⏳ Stage 4 — Tournament Simulation
+
+Planned
+
+Monte Carlo simulation of the complete FIFA World Cup.
+
+Includes:
+
+- Group simulation
+- Knockout simulation
+- Bracket generation
+- Champion probabilities
+
+---
+
+## ⏳ Stage 5 — AI Explanation Layer
+
+Planned
+
+Use Large Language Models (LLMs) to explain model predictions in natural language.
+
+Example:
+
+> "Why is France currently the favourite?"
+
+---
+
+## ⏳ Stage 6 — Deployment
+
+Planned
+
+Interactive web application with:
+
+- Live probabilities
+- Match predictions
+- Tournament simulation
+- AI explanations
+
+---
+
+# Dataset
 
 Historical tournaments included:
 
-* FIFA World Cup 2006
-* FIFA World Cup 2010
-* FIFA World Cup 2014
-* FIFA World Cup 2018
-* FIFA World Cup 2022
+- FIFA World Cup 2006
+- FIFA World Cup 2010
+- FIFA World Cup 2014
+- FIFA World Cup 2018
+- FIFA World Cup 2022
 
-The prediction dataset contains all qualified teams for the FIFA World Cup 2026.
+Prediction dataset:
 
----
-
-## Feature Engineering
-
-The following features were generated for every team:
-
-* Elo Rating
-* FIFA Ranking
-* Qualification Matches
-* Win Rate
-* Draw Rate
-* Loss Rate
-* Goals For Per Game
-* Goals Against Per Game
-* Goal Difference Per Game
-* Points Per Game
-* Host Nation
-* Confederation
-* Previous World Cup Progress
+- FIFA World Cup 2026 Qualified Teams
 
 ---
 
-## Feature Selection
+# Data Sources
 
-A feature ablation study was performed to identify redundant features.
+The project combines multiple public football datasets.
 
-The final feature set removed:
-
-* FIFA Rank
-* Confederation
-* Host
-* Goal Difference Per Game
-* Draw Rate
-* Loss Rate
-* Matches
-
-These removals resulted in a simpler model with little to no loss in predictive performance.
+- FIFA World Cup Results
+- International Match Results
+- Elo Ratings
+- FIFA Rankings
+- World Cup Qualification Results
 
 ---
 
-## Machine Learning Models
+# Features
 
-Three supervised classification models were implemented.
+The initial Machine Learning model uses only information available **before** the tournament begins.
 
-### Logistic Regression
+Features include:
 
-Used as the baseline linear classifier.
+- Elo Rating
+- Qualification Performance
+- Previous World Cup Progress
+- Host Nation
+- Confederation
 
-### Random Forest
-
-Ensemble learning model using bootstrap aggregation.
-
-### XGBoost
-
-Gradient Boosted Decision Trees for high-performance classification.
+Live tournament features are added during Stage 2A but are not yet used for model training.
 
 ---
 
-## Hyperparameter Tuning
+# Machine Learning Models
 
-GridSearchCV was performed for:
+Three supervised learning algorithms are implemented.
 
-* Random Forest
-* XGBoost
-
-Hyperparameter tuning produced only marginal improvements, so the final project uses a simplified tuned configuration for reproducibility.
+- Logistic Regression
+- Random Forest
+- XGBoost
 
 ---
 
-## Evaluation Strategy
+# Evaluation Strategy
 
-Instead of a random train-test split, the project uses:
+Instead of using a random train/test split, the project uses
 
 **Leave-One-World-Cup-Out Cross Validation**
 
-For every tournament:
+This better represents predicting future World Cups.
 
-* Train on all previous World Cups
-* Test on one unseen World Cup
+Evaluation includes:
 
-This better simulates predicting future tournaments.
-
-Evaluation metrics:
-
-* Accuracy
-* Precision
-* Recall
-* F1 Score
-* Confusion Matrix
-* Champion Prediction Accuracy
-* Champion Ranking
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Champion Prediction Accuracy
+- Champion Ranking
 
 ---
 
-## Project Structure
+# Live Tournament Engine
+
+Stage 2A introduced a generic tournament engine.
+
+Current capabilities:
+
+- Initialize tournament state
+- Update Elo ratings
+- Track tournament statistics
+- Track recent form
+- Mark eliminated teams
+- Generate updated feature datasets
+- Replay completed matches
+- Support future tournaments via configuration
+
+---
+
+# Project Structure
 
 ```text
 FIFA Predictor/
 
 ├── data/
 │   ├── raw/
-│   └── processed/
+│   ├── processed/
+│   └── live/
+│
+├── live/
+│   ├── adapters/
+│   ├── tournament_config.py
+│   ├── state.py
+│   ├── pipeline.py
+│   ├── elo.py
+│   ├── form.py
+│   ├── advancement.py
+│   ├── build_features.py
+│   └── initialize_tournament.py
+│
+├── tournaments/
+│   └── wc2026.yaml
 │
 ├── models/
-│   ├── compare_models.py
-│   ├── evaluate.py
-│   ├── predict.py
 │
 ├── scripts/
-│   ├── build_dataset.py
-│   ├── elo.py
-│   ├── fifa_rank.py
-│   ├── qualification_stats.py
-│   ├── previous_wc_progress.py
-│   └── ...
 │
 ├── utils/
-│   ├── config.py
-│   ├── preprocessing.py
-│   ├── evaluation.py
-│   ├── trainer.py
-│   ├── models.py
-│   ├── splitting.py
-│   └── ...
 │
-├── saved_models/
+├── tests/
 │
 ├── predictions/
+│
+├── saved_models/
 │
 ├── README.md
 └── requirements.txt
@@ -177,94 +258,101 @@ FIFA Predictor/
 
 ---
 
-## Installation
+# Running Stage 1
 
-Clone the repository.
-
-```bash
-git clone <repository-url>
-```
-
-Move into the project directory.
-
-```bash
-cd FIFA-Predictor
-```
-
-Install dependencies.
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Running the Project
-
-### Evaluate a Single Model
+Evaluate models
 
 ```bash
 python -m models.evaluate
 ```
 
----
-
-### Compare All Models
+Compare models
 
 ```bash
 python -m models.compare_models
 ```
 
----
-
-### Predict the 2026 FIFA World Cup
+Predict the 2026 World Cup
 
 ```bash
 python -m models.predict
 ```
 
-Prediction files will be generated inside:
+---
 
-```text
-predictions/
+# Running Stage 2A
+
+Initialize tournament
+
+```bash
+python -m live.adapters.cli --edition wc2026 --init
+```
+
+View tournament status
+
+```bash
+python -m live.adapters.cli --edition wc2026 --status
+```
+
+Process one match
+
+```bash
+python -m live.adapters.cli \
+--edition wc2026 \
+--result \
+--home Brazil \
+--away Norway \
+--home-goals 2 \
+--away-goals 1 \
+--round r16
+```
+
+Replay multiple matches
+
+```bash
+python -m live.adapters.batch_csv \
+--edition wc2026 \
+--file data/raw/batch_matches.csv
 ```
 
 ---
 
-## Prediction Output
+# Testing
 
-Each model generates a ranked list of qualified teams with their predicted championship probability.
+Stage 2A includes comprehensive unit and integration tests.
 
-Generated files:
+Run all tests:
 
-* logistic_regression_predictions.csv
-* random_forest_predictions.csv
-* xgboost_predictions.csv
-
-The project also reports a consensus prediction based on all models.
+```bash
+python -m pytest
+```
 
 ---
 
-## Technologies Used
+# Technologies
 
-* Python
-* Pandas
-* NumPy
-* Scikit-learn
-* XGBoost
-
----
-
-## Future Improvements
-
-* Include player-level statistics.
-* Incorporate betting odds and market probabilities.
-* Add injury and squad availability information.
-* Explore deep learning approaches.
-* Update the dataset after every international window.
+- Python
+- Pandas
+- NumPy
+- Scikit-Learn
+- XGBoost
+- PyYAML
+- PyTest
 
 ---
 
-## Author
+# Future Work
+
+The project will continue toward a fully dynamic AI-powered prediction system including:
+
+- Dynamic prediction updates
+- Match prediction
+- Monte Carlo simulation
+- AI explanations
+- Interactive web dashboard
+
+---
+
+# Author
 
 David Aashish

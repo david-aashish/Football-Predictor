@@ -1,0 +1,6 @@
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+TOURNAMENTS_DIR = PROJECT_ROOT / "tournaments"
+
+DEFAULT_EDITION = "wc2026"

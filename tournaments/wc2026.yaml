@@ -1,0 +1,43 @@
+edition: wc2026
+year: 2026
+teams: 48
+
+format:
+  group_stage:
+    groups: 12
+    teams_per_group: 4
+    matches_per_group: 6
+    advancement:
+      - rule: top_n
+        n: 2
+        per: group
+      - rule: best_third
+        count: 8
+  knockout_rounds:
+    - r32
+    - r16
+    - qf
+    - sf
+    - third_place
+    - final
+
+hosts:
+  - United States
+  - Mexico
+  - Canada
+
+elo:
+  k_factor: 40
+  host_advantage: 100
+
+form_window: 5
+
+baseline_dataset: data/processed/world_cup_dataset_2026.csv
+teams_source: data/raw/elo_2026.csv
+output_features: data/processed/wc2026_updated.csv
+state_dir: data/live/wc2026
+
+team_name_aliases:
+  "Curaçao": "CuraÃ§ao"
+  "Czech Republic": "Czechia"
+  "USA": "United States"

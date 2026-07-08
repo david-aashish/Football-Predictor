@@ -24,7 +24,7 @@ from config import (
 # ==========================================================
 
 ELO_FILE = Path("data/raw/elo.csv")
-QUALIFIED_FILE = Path("data/raw/qualified_teams.csv")
+SOURCE_FILE = Path("data/raw/previous_wc_progress_source.csv")
 OUTPUT_FILE = Path("data/raw/previous_wc_progress.csv")
 
 DID_NOT_QUALIFY = -1
@@ -74,7 +74,7 @@ def load_world_cup_results():
 
     print("Loading World Cup Results...")
 
-    return pd.read_csv(QUALIFIED_FILE)
+    return pd.read_csv(SOURCE_FILE)
 
 
 # ==========================================================

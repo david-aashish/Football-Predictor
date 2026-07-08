@@ -19,7 +19,7 @@ from config import (
 # Configuration
 # ==========================================================
 
-RESULTS_FILE = Path("data/raw/results.csv")
+SOURCE_FILE = Path("data/raw/qualification_stats_source.csv")
 ELO_FILE = Path("data/raw/elo.csv")
 OUTPUT_FILE = Path("data/raw/qualification_stats.csv")
 
@@ -32,7 +32,7 @@ def load_results():
 
     print("Loading Results Dataset...")
 
-    results = pd.read_csv(RESULTS_FILE)
+    results = pd.read_csv(SOURCE_FILE)
 
     results["date"] = pd.to_datetime(results["date"])
 

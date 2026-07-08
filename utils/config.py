@@ -1,12 +1,3 @@
-from pathlib import Path
-
-DATA_FILE = Path("data/processed/world_cup_dataset.csv")
-
-LOGISTIC_REGRESSION_MODEL_FILE = Path("saved_models/logistic_regression.pkl")
-SCALER_FILE = Path("saved_models/scaler.pkl")
-RANDOM_FOREST_MODEL_FILE = Path("saved_models/random_forest.pkl")
-XGBOOST_MODEL_FILE = Path("saved_models/xgboost.pkl")
-
 RANDOM_STATE = 42
 N_JOBS = -1
 MAX_ITER = 5000

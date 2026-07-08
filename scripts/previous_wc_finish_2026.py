@@ -19,7 +19,7 @@ from pathlib import Path
 # Files
 # ==========================================================
 
-QUALIFIED_FILE = Path("data/raw/qualified_teams.csv")
+SOURCE_FILE = Path("data/raw/previous_wc_progress_source.csv")
 ELO_FILE = Path("data/raw/elo_2026.csv")
 
 OUTPUT_FILE = Path(
@@ -70,7 +70,7 @@ def load_world_cup_results():
 
     print("Loading World Cup Results...")
 
-    return pd.read_csv(QUALIFIED_FILE)
+    return pd.read_csv(SOURCE_FILE)
 
 
 # ==========================================================

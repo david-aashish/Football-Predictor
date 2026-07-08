@@ -1,106 +1,125 @@
-                        FIFA World Cup Predictor
+                             FIFA World Cup Predictor
 ================================================================================
 
                          Historical FIFA Data Sources
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │  • FIFA Match Results                                                       │
- │  • Elo Ratings                                                              │
- │  • FIFA Rankings                                                            │
- │  • World Cup Results                                                        │
- │  • Confederation Information                                                │
- │  • Host Nation Information                                                  │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  • FIFA Match Results                                                       │
+│  • Elo Ratings                                                              │
+│  • FIFA Rankings                                                            │
+│  • World Cup Results                                                        │
+│  • Confederation Information                                                │
+│  • Host Nation Information                                                  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
                      Data Processing & Feature Engineering
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │  • Qualification Statistics                                                 │
- │  • Previous World Cup Progress                                              │
- │  • Elo Rating Integration                                                   │
- │  • FIFA Ranking Integration                                                 │
- │  • Confederation Encoding                                                   │
- │  • Host Feature                                                             │
- │  • Data Cleaning & Validation                                               │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  • Qualification Statistics                                                 │
+│  • Previous World Cup Progress                                              │
+│  • Elo Rating Integration                                                   │
+│  • FIFA Ranking Integration                                                 │
+│  • Confederation Encoding                                                   │
+│  • Host Feature                                                             │
+│  • Data Cleaning & Validation                                               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
                           Final Training Dataset
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │  Team │ Elo │ FIFA Rank │ Qualification Stats │ Previous WC │ ... │ Winner  │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│ Team │ Elo │ Qualification │ Previous WC │ Host │ ... │ Winner              │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
-                        Feature Selection (Experiment 2)
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │  Removed low-impact features based on feature importance analysis           │
- │                                                                             │
- │  Remaining features used for final training                                 │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
+                     Feature Selection & Model Training
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  • Logistic Regression                                                      │
+│  • Random Forest                                                            │
+│  • XGBoost                                                                  │
+│                                                                             │
+│  Leave-One-World-Cup-Out Evaluation                                         │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
-                      Leave-One-World-Cup-Out Evaluation
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │          2006   2010   2014   2018   2022                                   │
- │           ▲      ▲      ▲      ▲      ▲                                     │
- │           │      │      │      │      │                                     │
- │   Train on all other tournaments → Test on held-out World Cup               │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
+                         Pre-Tournament Prediction
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  Champion probabilities before the tournament begins                        │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+────────────────────────────────────┼──────────────────────────────────────────
+                                    ▼
+                        Stage 2A Live Tournament Engine
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│                Tournament Configuration (wc2026.yaml)                       │
+│                              │                                              │
+│                              ▼                                              │
+│                  Initialize Tournament State                                │
+│                              │                                              │
+│                              ▼                                              │
+│                     tournament_state.json                                   │
+│                              │                                              │
+│                              ▼                                              │
+│                 Match Input (CLI / Batch CSV)                               │
+│                              │                                              │
+│                              ▼                                              │
+│                     Generic Update Pipeline                                 │
+│                                                                             │
+│    • Dynamic Elo Update                                                     │
+│    • Tournament Statistics                                                  │
+│    • Recent Form                                                            │
+│    • Match History                                                          │
+│    • Elimination Tracking                                                   │
+│    • Tournament Phase Tracking                                              │
+│                                                                             │
+│                              │                                              │
+│                              ▼                                              │
+│                     Updated Tournament State                                │
+│                              │                                              │
+│                              ▼                                              │
+│                  Build Updated Feature Dataset                              │
+│                              │                                              │
+│                              ▼                                              │
+│                  wc2026_updated.csv                                         │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
-                          Machine Learning Models
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │   • Logistic Regression                                                     │
- │   • Random Forest                                                           │
- │   • XGBoost                                                                 │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
+                         Stage 2B (Next Stage)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  Reload trained ML model                                                    │
+│          │                                                                  │
+│          ▼                                                                  │
+│  Predict champion probabilities again                                       │
+│          │                                                                  │
+│          ▼                                                                  │
+│  Remove eliminated teams                                                    │
+│          │                                                                  │
+│          ▼                                                                  │
+│  Renormalize probabilities                                                  │
+│          │                                                                  │
+│          ▼                                                                  │
+│  Save timestamped prediction snapshot                                       │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
-                         Model Comparison & Selection
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │  Compare using:                                                             │
- │      • Champion Prediction Accuracy                                         │
- │      • Top-3 Champion Ranking                                               │
- │      • Average F1 Score                                                     │
- │      • Average Champion Rank                                                │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-                          2026 Prediction Pipeline
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │  2026 Team Statistics                                                       │
- │        │                                                                    │
- │        ▼                                                                    │
- │  Same Feature Engineering                                                   │
- │        │                                                                    │
- │        ▼                                                                    │
- │  Trained Models                                                             │
- │        │                                                                    │
- │        ▼                                                                    │
- │  Champion Probabilities                                                     │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-                               Final Output
- ┌─────────────────────────────────────────────────────────────────────────────┐
- │                                                                             │
- │  • Ranked teams                                                             │
- │  • Champion probabilities                                                   │
- │  • Predicted FIFA World Cup Champion                                        │
- │                                                                             │
- └─────────────────────────────────────────────────────────────────────────────┘
+                           Future Stages
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  Stage 3 : Match Prediction                                                 │
+│  Stage 4 : Monte Carlo Tournament Simulation                                │
+│  Stage 5 : AI Explanation Layer (LLM)                                       │
+│  Stage 6 : Live Dashboard / Deployment                                      │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,826 @@
+{
+  "edition": "wc2026",
+  "year": 2026,
+  "current_phase": "pre_tournament",
+  "teams": {
+    "Spain": {
+      "elo": 2157.0,
+      "baseline_elo": 2157.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Argentina": {
+      "elo": 2115.0,
+      "baseline_elo": 2115.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "France": {
+      "elo": 2063.0,
+      "baseline_elo": 2063.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "England": {
+      "elo": 2024.0,
+      "baseline_elo": 2024.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Brazil": {
+      "elo": 1991.0,
+      "baseline_elo": 1991.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Portugal": {
+      "elo": 1989.0,
+      "baseline_elo": 1989.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Colombia": {
+      "elo": 1982.0,
+      "baseline_elo": 1982.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Netherlands": {
+      "elo": 1948.0,
+      "baseline_elo": 1948.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Ecuador": {
+      "elo": 1938.0,
+      "baseline_elo": 1938.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Germany": {
+      "elo": 1932.0,
+      "baseline_elo": 1932.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Norway": {
+      "elo": 1914.0,
+      "baseline_elo": 1914.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Croatia": {
+      "elo": 1912.0,
+      "baseline_elo": 1912.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Turkey": {
+      "elo": 1911.0,
+      "baseline_elo": 1911.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Japan": {
+      "elo": 1906.0,
+      "baseline_elo": 1906.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Belgium": {
+      "elo": 1894.0,
+      "baseline_elo": 1894.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Uruguay": {
+      "elo": 1892.0,
+      "baseline_elo": 1892.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Switzerland": {
+      "elo": 1891.0,
+      "baseline_elo": 1891.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Mexico": {
+      "elo": 1875.0,
+      "baseline_elo": 1875.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Senegal": {
+      "elo": 1860.0,
+      "baseline_elo": 1860.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Paraguay": {
+      "elo": 1834.0,
+      "baseline_elo": 1834.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Austria": {
+      "elo": 1830.0,
+      "baseline_elo": 1830.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Morocco": {
+      "elo": 1827.0,
+      "baseline_elo": 1827.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Canada": {
+      "elo": 1788.0,
+      "baseline_elo": 1788.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Scotland": {
+      "elo": 1782.0,
+      "baseline_elo": 1782.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Australia": {
+      "elo": 1777.0,
+      "baseline_elo": 1777.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Algeria": {
+      "elo": 1772.0,
+      "baseline_elo": 1772.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Iran": {
+      "elo": 1772.0,
+      "baseline_elo": 1772.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "South Korea": {
+      "elo": 1758.0,
+      "baseline_elo": 1758.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Czechia": {
+      "elo": 1740.0,
+      "baseline_elo": 1740.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Panama": {
+      "elo": 1730.0,
+      "baseline_elo": 1730.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "United States": {
+      "elo": 1726.0,
+      "baseline_elo": 1726.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Uzbekistan": {
+      "elo": 1714.0,
+      "baseline_elo": 1714.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Sweden": {
+      "elo": 1712.0,
+      "baseline_elo": 1712.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Egypt": {
+      "elo": 1696.0,
+      "baseline_elo": 1696.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Ivory Coast": {
+      "elo": 1695.0,
+      "baseline_elo": 1695.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Jordan": {
+      "elo": 1680.0,
+      "baseline_elo": 1680.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "DR Congo": {
+      "elo": 1652.0,
+      "baseline_elo": 1652.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Tunisia": {
+      "elo": 1628.0,
+      "baseline_elo": 1628.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Iraq": {
+      "elo": 1607.0,
+      "baseline_elo": 1607.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Bosnia and Herzegovina": {
+      "elo": 1595.0,
+      "baseline_elo": 1595.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Cape Verde": {
+      "elo": 1578.0,
+      "baseline_elo": 1578.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Saudi Arabia": {
+      "elo": 1576.0,
+      "baseline_elo": 1576.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "New Zealand": {
+      "elo": 1562.0,
+      "baseline_elo": 1562.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Haiti": {
+      "elo": 1548.0,
+      "baseline_elo": 1548.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "South Africa": {
+      "elo": 1517.0,
+      "baseline_elo": 1517.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Ghana": {
+      "elo": 1510.0,
+      "baseline_elo": 1510.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "CuraÃ§ao": {
+      "elo": 1434.0,
+      "baseline_elo": 1434.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    },
+    "Qatar": {
+      "elo": 1421.0,
+      "baseline_elo": 1421.0,
+      "eliminated": false,
+      "group": null,
+      "tournament_stats": {
+        "matches": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "goals_for": 0,
+        "goals_against": 0,
+        "goal_difference": 0,
+        "points": 0
+      },
+      "form_last_n": []
+    }
+  },
+  "completed_matches": [],
+  "eliminated_teams": [],
+  "group_standings": {}
+}

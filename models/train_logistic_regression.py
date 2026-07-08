@@ -2,6 +2,8 @@
 train_logistic_regression.py
 """
 
+from pathlib import Path
+
 from utils.data_loader import load_dataset
 from utils.preprocessing import (
     preprocess_dataset,
@@ -10,10 +12,9 @@ from utils.preprocessing import (
 from utils.models import get_logistic_regression
 from utils.trainer import train_model
 from utils.save import save_model
-from utils.config import (
-    LOGISTIC_REGRESSION_MODEL_FILE,
-    SCALER_FILE
-)
+
+LOGISTIC_REGRESSION_MODEL_FILE = Path("saved_models/logistic_regression.pkl")
+SCALER_FILE = Path("saved_models/scaler.pkl")
 
 if __name__ == "__main__":
 

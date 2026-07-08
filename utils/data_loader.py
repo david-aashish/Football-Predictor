@@ -1,5 +1,7 @@
 import pandas as pd
-from utils.config import DATA_FILE
+from pathlib import Path
+
+DATA_FILE = Path("data/processed/world_cup_dataset.csv")
 
 def load_dataset():
 

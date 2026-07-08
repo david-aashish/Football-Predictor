@@ -10,12 +10,15 @@ Output:
     saved_models/xgboost.pkl
 """
 
+from pathlib import Path
+
 from utils.data_loader import load_dataset
 from utils.preprocessing import preprocess_dataset
 from utils.models import get_xgboost
 from utils.trainer import train_model
 from utils.save import save_model
-from utils.config import XGBOOST_MODEL_FILE
+
+XGBOOST_MODEL_FILE = Path("saved_models/xgboost.pkl")
 
 if __name__ == "__main__":
 
