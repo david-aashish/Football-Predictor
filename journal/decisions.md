@@ -294,4 +294,13 @@ Integration Tests (batch_csv.py) map how components talk to each other, catching
 Decision 020:
 Made timeline strict, one-edition-at-a-time pipeline. If we pass --edition wc2026 it stores timeline for only wc2026 snapshots that happened, if --edition wc2030 it stores timeline for only wc2030 snapshots that happened.
 
+Decision 021:
+Adopt a feature branch workflow with automated GitHub Actions testing before merging into main. 
+New 5-Step Routine:-
+1. Push to branch-x: You upload your features or bug fixes to your separate branch.
+2. Review Failures: If a test breaks, look at the GitHub Actions tab or your email to find out which of the tests failed.
+3. Fix and Test Locally: Fix the bug in your code editor and verify it on your machine by running python -m pytest in your terminal.
+4. Push the Fix: Push the new commit to branch-x. GitHub Actions will automatically re-run the tests.
+5. Merge: Once the status check turns green, click the Merge pull request button on GitHub to safely pull the verified code into main.
+
 With this we are **DONE** with *Stage 2B* 
