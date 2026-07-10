@@ -261,3 +261,37 @@ Which files should be tested?
 A simple rule - If a file contains logic, test it.
 Integration test verifies that an entire workflow or pipeline is working together collectively as expected.
 
+With this we are **DONE** with *Stage 2A* 
+
+Decision 015:
+Thought to make 2 different files in models folder, predict.py which is manually run and gives predictions of our models while predictor.py has all the predicting functions stored in it. Also made a seperate file in live folder called prediction.py which handles live probability corrections.
+
+Decision 016:
+Model probability vs Live Probability:-
+Model probabilities are the probabilities of teams winning after a certain match happened (Doesnt know if a team is eliminated).
+Live probabilities are the probabilities of teams winning after the tournament rules such as elimination and normalization of probabilities occured.
+
+In simple words model probability :- "If I ignored the tournament rules and simply asked the ML model after this match, what probability would it assign?"
+
+Example:- Suppose match 1 France vs Argentina , France got eliminated since it was r16, So when predicted got new model probabilities and live probabilites got normalized with the model probability of france (x1) being distributed among remaining. Then next match 2 Norway vs Brazil, group stage no one got eliminated, So when predicted new model probability or maybe same for few teams since they werent affected, even though group match, some features got updated. Now also Live probabilities got normalized with the model probability of france (x2) being distributed among remaining. Now match 3 Portugal vs Senegal, r16 and senegal got eliminated, So when predicted new model probability or maybe same for few teams since they werent affected, now live probabilities got normalized with the model probabilities of france (x3) and senegal (y1) being distributed among remaining teams. Is this what is happening? france even though eliminated in match 1 continues to distribute its model probability in every match till the end!
+
+Decision 017:
+Decided to add a column called Status which shows if a team is "Active" or "Eliminated" since in models like random forest many teams probabilites were pointing towards 0 even when they werent eliminated.
+
+Decision 018:
+Instead of creating many timeline files, decided to overwrite the same timeline file as more and more snapshots are generated.
+
+Also thought that running --init should reinitialize the entire tournament so implemented that and resets the snapshots to have only pre-tournament snapshot and timeline with only those probabilites.
+
+Decision 019:
+Named 2 test files the exact same name though one was in unit test folder and one was in integration test folder. Due to this, had to make .toml file which the pytest uses as config to run it!
+
+And due to the creation of .toml file, a test in test_batch_csv.py which was being skipped got exposed. It wasnt mocking the data properly, had to fix the pipeline with proper configuration paths.
+
+Unit Tests (cli.py, prediction.py) check syntax, conditionals, and mocking interfaces instantly without breaking over external issues.
+Integration Tests (batch_csv.py) map how components talk to each other, catching structural mismatches (like our KeyError) before code goes to production.
+
+Decision 020:
+Made timeline strict, one-edition-at-a-time pipeline. If we pass --edition wc2026 it stores timeline for only wc2026 snapshots that happened, if --edition wc2030 it stores timeline for only wc2030 snapshots that happened.
+
+With this we are **DONE** with *Stage 2B* 

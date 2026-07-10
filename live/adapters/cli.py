@@ -10,6 +10,10 @@ from live.tournament_config import (
 )
 from live.models import MatchResult
 from live.pipeline import update_pipeline
+from live.prediction import apply_live_probability_rules
+from live.snapshot import save_prediction_snapshot, reset_snapshots
+from live.timeline import build_probability_timeline
+from models.predictor import predict_dataset
 
 
 # ==========================================================
@@ -18,6 +22,14 @@ from live.pipeline import update_pipeline
 
 def command_init(edition: str):
     initialize(edition)
+
+    config = resolve_config_paths(
+        load_tournament_config(edition)
+    )
+
+    reset_snapshots(edition)
+
+    run_live_prediction(config)
 
 # ==========================================================
 # Status
@@ -34,6 +46,34 @@ def command_status(config):
     print(f"Eliminated Teams : {len(state['eliminated_teams'])}")
     print("=" * 60)
 
+# ==========================================================
+# Live prediction
+# ==========================================================
+
+def run_live_prediction(config):
+    predictions = predict_dataset(
+        config.output_features,
+        model_name="xgboost"
+    )
+
+    predictions = apply_live_probability_rules(
+        predictions,
+        config.state_file
+    )
+
+    state = load_state(config)
+
+    snapshot_path = save_prediction_snapshot(
+        predictions,
+        edition=config.edition,
+        tournament_state=state
+    )
+
+    build_probability_timeline(
+        edition=config.edition
+    )
+
+    return predictions, snapshot_path
 
 # ==========================================================
 # Add Result
@@ -65,9 +105,15 @@ def command_result(config, args):
         match=match,
     )
 
+    predictions, snapshot_path = run_live_prediction(config)
+
     print("=" * 60)
     print("Match processed successfully.")
+    print(f"Snapshot saved: {snapshot_path}")
     print("=" * 60)
+    print()
+    print("Top 10 Live Champion Probabilities")
+    print(predictions.head(10).to_string(index=False))
 
 
 # ==========================================================

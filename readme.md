@@ -57,16 +57,23 @@ The architecture is tournament-independent and can be reused for future World Cu
 
 ---
 
-## 🔄 Stage 2B — Dynamic Re-Prediction
+## ✅ Stage 2B — Dynamic Re-Prediction
 
-Planned
+Completed
 
-After every completed World Cup match:
+Built a live championship prediction engine that recalculates World Cup winner probabilities after every completed match using the Stage 1 Machine Learning models.
 
-- Update live features
-- Re-run prediction models
-- Generate new championship probabilities
-- Save probability snapshots over time
+Implemented:
+
+- Reusable prediction pipeline
+- Dynamic prediction using updated tournament features
+- Live probability adjustment for eliminated teams
+- Probability normalization
+- Automatic prediction snapshots
+- Probability timeline generation
+- CLI integration
+- Batch replay integration
+- Unit and integration testing
 
 ---
 
@@ -166,7 +173,7 @@ Features include:
 - Host Nation
 - Confederation
 
-Live tournament features are added during Stage 2A but are not yet used for model training.
+Live tournament features generated during Stage 2A are used during Stage 2B to dynamically re-run the trained models after every completed match. The models are not retrained during the tournament; instead, updated features are passed through the existing Stage 1 models.
 
 ---
 
@@ -201,8 +208,6 @@ Evaluation includes:
 
 # Live Tournament Engine
 
-Stage 2A introduced a generic tournament engine.
-
 Current capabilities:
 
 - Initialize tournament state
@@ -211,6 +216,10 @@ Current capabilities:
 - Track recent form
 - Mark eliminated teams
 - Generate updated feature datasets
+- Dynamically recalculate championship probabilities
+- Apply elimination-aware probability normalization
+- Save prediction snapshots after every match
+- Generate team probability timelines
 - Replay completed matches
 - Support future tournaments via configuration
 
@@ -220,7 +229,6 @@ Current capabilities:
 
 ```text
 FIFA Predictor/
-
 ├── data/
 │   ├── raw/
 │   ├── processed/
@@ -228,32 +236,45 @@ FIFA Predictor/
 │
 ├── live/
 │   ├── adapters/
-│   ├── tournament_config.py
-│   ├── state.py
+|   |   ├── cli.py
+|   |   └── batch_csv.py
 │   ├── pipeline.py
+│   ├── prediction.py
+│   ├── snapshot.py
+│   ├── timeline.py
+│   ├── state.py
 │   ├── elo.py
 │   ├── form.py
 │   ├── advancement.py
 │   ├── build_features.py
-│   └── initialize_tournament.py
+│   ├── initialize.py
+│   └── ...
+│
+├── models/
+│   ├── predictor.py
+│   ├── predict.py
+│   └── ...
+│
+├── predictions/
+│   ├── snapshots/
+│   └── timelines/
 │
 ├── tournaments/
 │   └── wc2026.yaml
 │
-├── models/
-│
-├── scripts/
+├── tests/
 │
 ├── utils/
 │
-├── tests/
-│
-├── predictions/
+├── scripts/
 │
 ├── saved_models/
 │
+├── data_sources.md
+├── pyproject.toml
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── solution_architecture.doc
 ```
 
 ---
@@ -280,7 +301,7 @@ python -m models.predict
 
 ---
 
-# Running Stage 2A
+# Running Stage 2
 
 Initialize tournament
 
@@ -307,6 +328,14 @@ python -m live.adapters.cli \
 --round r16
 ```
 
+The command automatically:
+
+- Updates the tournament state
+- Regenerates live tournament features
+- Recalculates championship probabilities
+- Saves a prediction snapshot
+- Updates the team probability timeline
+
 Replay multiple matches
 
 ```bash
@@ -315,11 +344,25 @@ python -m live.adapters.batch_csv \
 --file data/raw/batch_matches.csv
 ```
 
+Generated outputs:-
+
+Stage 2 automatically generates:
+
+```text
+predictions/
+├── snapshots/
+│   ├── wc2026_snapshot_001_pre_tournament.csv
+│   ├── wc2026_snapshot_002_match_001.csv
+│   └── ...
+│
+└── timelines/
+    └── wc2026_probability_timeline.csv
+
 ---
 
 # Testing
 
-Stage 2A includes comprehensive unit and integration tests.
+Stages 2A and 2B include comprehensive unit and integration tests covering the live tournament engine, dynamic prediction pipeline, snapshot generation, and probability timeline creation.
 
 Run all tests:
 
@@ -343,11 +386,11 @@ python -m pytest
 
 # Future Work
 
-The project will continue toward a fully dynamic AI-powered prediction system including:
+The project will continue toward a complete AI-powered World Cup prediction platform including:
 
-- Dynamic prediction updates
+- Probability visualization
 - Match prediction
-- Monte Carlo simulation
+- Monte Carlo tournament simulation
 - AI explanations
 - Interactive web dashboard
 

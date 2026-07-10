@@ -2,7 +2,10 @@
 predict.py
 
 Train all models on the full historical dataset
-and predict the 2026 FIFA World Cup.
+and predict champion probabilities for any input feature dataset.
+
+Default:
+    data/processed/world_cup_dataset_2026.csv
 
 Output:
     predictions/
@@ -11,143 +14,97 @@ Output:
         xgboost_predictions.csv
 """
 
-import pandas as pd
+import argparse
 from pathlib import Path
 
-from utils.preprocessing import preprocess_dataset, scale_features
-from utils.models import (
-    get_logistic_regression,
-    get_random_forest,
-    get_xgboost,
-)
+import pandas as pd
+
+from live.prediction import apply_live_probability_rules
+from models.predictor import predict_dataset
+
+from utils.config import MODEL_NAMES
 
 TRAIN_FILE = Path("data/processed/world_cup_dataset.csv")
-
-PREDICT_FILE = Path("data/processed/world_cup_dataset_2026.csv")
-
+DEFAULT_PREDICT_FILE = Path("data/processed/world_cup_dataset_2026.csv")
 OUTPUT_DIR = Path("predictions")
 
-# ==========================================================
-# Load
-# ==========================================================
+def main():
+    parser = argparse.ArgumentParser()
 
-train_df = pd.read_csv(TRAIN_FILE)
-predict_df = pd.read_csv(PREDICT_FILE)
-
-# Save team names
-
-teams = predict_df["Team"].copy()
-
-# ==========================================================
-# Preprocess
-# ==========================================================
-
-train_df = preprocess_dataset(train_df)
-predict_df = preprocess_dataset(predict_df)
-
-X_train = train_df.drop(columns=["Winner", "Year", "Team"])
-y_train = train_df["Winner"]
-
-X_predict = predict_df.drop(columns=["Year", "Team"])
-
-# ==========================================================
-# Models
-# ==========================================================
-
-models = {
-
-    "logistic_regression": get_logistic_regression(),
-
-    "random_forest": get_random_forest(),
-
-    "xgboost": get_xgboost()
-
-}
-
-OUTPUT_DIR.mkdir(exist_ok=True)
-
-champions = []
-
-print("=" * 80)
-print("FIFA WORLD CUP 2026 PREDICTIONS")
-print("=" * 80)
-
-for name, model in models.items():
-
-    print()
-    print("#" * 80)
-    print(name.upper())
-    print("#" * 80)
-
-    X_predict = X_predict.reindex(columns=X_train.columns, fill_value=0)
-    
-    # Logistic needs scaling
-
-    if name == "logistic_regression":
-
-        X_train_scaled, X_predict_scaled = scale_features(
-            X_train,
-            X_predict
-        )
-
-        model.fit(X_train_scaled, y_train)
-
-        probabilities = model.predict_proba(
-            X_predict_scaled
-        )[:, 1]
-
-    else:
-
-        model.fit(X_train, y_train)
-
-        probabilities = model.predict_proba(
-            X_predict
-        )[:, 1]
-
-    predictions = pd.DataFrame({
-
-        "Team": teams,
-
-        "Probability": probabilities
-
-    })
-
-    predictions = predictions.sort_values(
-        "Probability",
-        ascending=False
-    ).reset_index(drop=True)
-
-    predictions.index += 1
-
-    print(predictions.head(10))
-
-    champion = predictions.iloc[0]["Team"]
-
-    champions.append(champion)
-
-    print()
-    print(f"Predicted Champion : {champion}")
-
-    predictions.to_csv(
-
-        OUTPUT_DIR / f"{name}_predictions.csv",
-
-        index_label="Rank"
-
+    parser.add_argument(
+        "--file",
+        type=str,
+        default=str(DEFAULT_PREDICT_FILE),
+        help="Feature CSV file to generate predictions for"
     )
 
-# ==========================================================
-# Consensus
-# ==========================================================
+    parser.add_argument(
+        "--edition",
+        default="wc2026",
+        help="Tournament edition"
+    )
 
-print()
-print("=" * 80)
-print("CONSENSUS PREDICTION")
-print("=" * 80)
+    args = parser.parse_args()
 
-votes = pd.Series(champions).value_counts()
+    tournament_state = Path(
+        f"data/live/{args.edition}/tournament_state.json"
+    )
 
-print(votes)
+    dataset_path = Path(args.file)
 
-print()
-print(f"Consensus Champion : {votes.index[0]}")
+    OUTPUT_DIR.mkdir(exist_ok=True)
+
+    all_predictions = {}
+
+    live_predictions = {}
+
+    for model_name in MODEL_NAMES:
+        all_predictions[model_name] = predict_dataset(
+            dataset_path,
+            model_name
+        )
+        live_predictions[model_name] = apply_live_probability_rules(
+            all_predictions[model_name],
+            tournament_state
+        )
+
+    champions = []
+
+    print("=" * 80)
+    print("FIFA WORLD CUP PREDICTIONS")
+    print("=" * 80)
+
+    for name, predictions in live_predictions.items():
+        print()
+        print("#" * 80)
+        print(name.upper())
+        print("#" * 80)
+
+        print(predictions.head(10).to_string(index=False))
+
+        champion = predictions.iloc[0]["Team"]
+        champions.append(champion)
+
+        print()
+        print(f"Predicted Champion : {champion}")
+
+        predictions.to_csv(
+            OUTPUT_DIR / f"{name}_predictions.csv",
+            index_label="Rank"
+        )
+
+    print()
+    print("=" * 80)
+    print("CONSENSUS PREDICTION")
+    print("=" * 80)
+
+    votes = pd.Series(champions).value_counts()
+
+    print(votes)
+
+    print()
+    print(f"Consensus Champion : {votes.index[0]}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,204 @@
+================================================================================
+                         FIFA World Cup Predictor
+================================================================================
+
+                         Historical FIFA Data Sources
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  • FIFA Match Results                                                       │
+│  • Elo Ratings                                                              │
+│  • FIFA Rankings                                                            │
+│  • World Cup Results                                                        │
+│  • Qualification Results                                                    │
+│  • Confederation & Host Nation Information                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                    Data Processing & Feature Engineering
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  • Qualification Statistics                                                 │
+│  • Previous World Cup Progress                                              │
+│  • Elo Rating Integration                                                   │
+│  • FIFA Ranking Integration                                                 │
+│  • Confederation Encoding                                                   │
+│  • Host Feature                                                             │
+│  • Data Cleaning & Validation                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                         Final Training Dataset
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  Team │ Elo │ Qualification │ Previous WC │ Host │ Confederation │ Winner   │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                    Feature Selection & Model Training
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  Models:                                                                    │
+│  • Logistic Regression                                                      │
+│  • Random Forest                                                            │
+│  • XGBoost                                                                  │
+│                                                                             │
+│  Evaluation:                                                                │
+│  • Leave-One-World-Cup-Out Cross Validation                                 │
+│  • Champion Prediction Accuracy                                             │
+│  • Champion Ranking                                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                       Stage 1: Static Prediction
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  Predicts champion probabilities before the World Cup begins.               │
+│                                                                             │
+│  Output:                                                                    │
+│  • Pre-tournament winner probability table                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+────────────────────────────────────┼──────────────────────────────────────────
+                                    ▼
+                Stage 2A: Generic Live Tournament Engine
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│             Tournament Configuration                                        │
+│             tournaments/wc2026.yaml                                         │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Initialize Tournament State                                     │
+│                         │                                                   │
+│                         ▼                                                   │
+│             tournament_state.json                                           │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Match Input                                                     │
+│             CLI / Batch CSV                                                 │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Generic Update Pipeline                                         │
+│                                                                             │
+│             Updates after every completed match:                            │
+│             • Dynamic Elo                                                   │
+│             • Tournament statistics                                         │
+│             • Recent form                                                   │
+│             • Match history                                                 │
+│             • Current phase                                                 │
+│             • Knockout eliminations                                         │
+│                                                                             │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Updated Tournament State                                        │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Build Updated Feature Dataset                                   │
+│                         │                                                   │
+│                         ▼                                                   │
+│             data/processed/wc2026_updated.csv                               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+              Stage 2B: Dynamic Championship Re-Prediction
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│             Updated Feature Dataset                                         │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Reuse Stage 1 Prediction Pipeline                               │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Re-run Trained ML Model                                         │
+│             No retraining during tournament                                 │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Model Probability                                               │
+│             Latest ML probability based on current features                 │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Apply Live Tournament Rules                                     │
+│                                                                             │
+│             • Eliminated teams receive 0 probability                        │
+│             • Remaining teams are renormalized                              │
+│             • Active / Eliminated status is tracked                         │
+│                                                                             │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Live Champion Probabilities                                     │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Save Prediction Snapshot                                        │
+│                                                                             │
+│             predictions/snapshots/                                          │
+│             • wc2026_snapshot_001_pre_tournament.csv                        │
+│             • wc2026_snapshot_002_match_001.csv                             │
+│             • wc2026_snapshot_003_match_002.csv                             │
+│                                                                             │
+│                         │                                                   │
+│                         ▼                                                   │
+│             Build Probability Timeline                                      │
+│                                                                             │
+│             predictions/timelines/                                          │
+│             • wc2026_probability_timeline.csv                               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                         Automated Stage 2 Flow
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  Single Match CLI                                                           │
+│                                                                             │
+│  Match Result                                                               │
+│      │                                                                      │
+│      ▼                                                                      │
+│  Update Tournament State                                                    │
+│      │                                                                      │
+│      ▼                                                                      │
+│  Regenerate Live Features                                                   │
+│      │                                                                      │
+│      ▼                                                                      │
+│  Recalculate Champion Probabilities                                         │
+│      │                                                                      │
+│      ▼                                                                      │
+│  Apply Elimination Rules                                                    │
+│      │                                                                      │
+│      ▼                                                                      │
+│  Save Snapshot                                                              │
+│      │                                                                      │
+│      ▼                                                                      │
+│  Update Probability Timeline                                                │
+│                                                                             │
+│                                                                             │
+│  Batch CSV Replay                                                           │
+│                                                                             │
+│  Match 1 → Update → Predict → Snapshot → Timeline                           │
+│  Match 2 → Update → Predict → Snapshot → Timeline                           │
+│  Match 3 → Update → Predict → Snapshot → Timeline                           │
+│  ...                                                                        │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                         Testing & Validation
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  Unit Tests                                                                 │
+│  • Prediction rule validation                                               │
+│  • Elimination handling                                                     │
+│  • Probability normalization                                                │
+│  • Snapshot creation and reset                                              │
+│  • Timeline generation                                                      │
+│                                                                             │
+│  Integration Tests                                                          │
+│  • CLI initialization                                                       │
+│  • Single match processing                                                  │
+│  • Batch match replay                                                       │
+│  • Snapshot creation after every match                                      │
+│  • Timeline update after every snapshot                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                            Future Stages
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  Stage 2C : Probability Visualization                                       │
+│  Stage 3  : Match Prediction                                                │
+│  Stage 4  : Monte Carlo Tournament Simulation                               │
+│  Stage 5  : AI Explanation Layer using LLMs                                 │
+│  Stage 6  : Interactive Web Dashboard / Deployment                          │
+└─────────────────────────────────────────────────────────────────────────────┘

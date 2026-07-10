@@ -16,7 +16,7 @@ EVAL_METRIC = "logloss"
 
 MODEL_NAME = "xgboost"  # Options: "logistic_regression", "random_forest", "xgboost"
 
-MODELS = [
+MODEL_NAMES = [
     "logistic_regression",
     "random_forest",
     "xgboost"
