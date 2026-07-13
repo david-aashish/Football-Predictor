@@ -14,6 +14,10 @@ from live.prediction import apply_live_probability_rules
 from live.snapshot import save_prediction_snapshot, reset_snapshots
 from live.timeline import build_probability_timeline
 from models.predictor import predict_dataset
+from live.visualization import (
+    generate_top_10_by_snapshot,
+    plot_team_probability_timeline,
+)
 
 
 # ==========================================================
@@ -29,7 +33,8 @@ def command_init(edition: str):
 
     reset_snapshots(edition)
 
-    run_live_prediction(config)
+    outputs = run_live_prediction(config)
+
 
 # ==========================================================
 # Status
@@ -73,7 +78,20 @@ def run_live_prediction(config):
         edition=config.edition
     )
 
-    return predictions, snapshot_path
+    timeline_chart_path = plot_team_probability_timeline(
+        edition=config.edition
+    )
+
+    top_10_path = generate_top_10_by_snapshot(
+        edition=config.edition
+    )
+
+    return {
+        "predictions": predictions,
+        "snapshot_path": snapshot_path,
+        "timeline_chart_path": timeline_chart_path,
+        "top_10_path": top_10_path,
+    }
 
 # ==========================================================
 # Add Result
@@ -105,12 +123,16 @@ def command_result(config, args):
         match=match,
     )
 
-    predictions, snapshot_path = run_live_prediction(config)
+    outputs = run_live_prediction(config)
+    predictions = outputs["predictions"]
 
     print("=" * 60)
     print("Match processed successfully.")
-    print(f"Snapshot saved: {snapshot_path}")
+    print(f"Snapshot:      {outputs['snapshot_path']}")
+    print(f"Timeline PNG:  {outputs['timeline_chart_path']}")
+    print(f"Top 10 table:  {outputs['top_10_path']}")
     print("=" * 60)
+
     print()
     print("Top 10 Live Champion Probabilities")
     print(predictions.head(10).to_string(index=False))

@@ -4,12 +4,12 @@ from unittest.mock import MagicMock, patch
 import pandas as pd
 import pytest
 
-from live.adapters.cli import main
+from live.adapters.cli import main, run_live_prediction
 
 
 @pytest.fixture
 def mock_dependencies():
-    """Fixture to mock all heavy infrastructure, file, and ML model dependencies."""
+    """Fixture to mock all heavy infrastructure, file, ML model, and visualization dependencies."""
     with (
         patch("live.adapters.cli.initialize") as mock_init,
         patch("live.adapters.cli.load_tournament_config") as mock_load_config,
@@ -22,8 +22,10 @@ def mock_dependencies():
         patch("live.adapters.cli.build_probability_timeline") as mock_build_timeline,
         patch("live.adapters.cli.update_pipeline") as mock_update_pipeline,
         patch("live.adapters.cli.MatchResult") as mock_match_result,
+        patch("live.adapters.cli.plot_team_probability_timeline") as mock_plot_timeline,
+        patch("live.adapters.cli.generate_top_10_by_snapshot") as mock_gen_top10,
     ):
-        # Setup configuration mock mock attributes
+        # Setup configuration mock attributes
         mock_config = MagicMock()
         mock_config.edition = "wc2026"
         mock_config.state_file = "data/live/wc2026/tournament_state.json"
@@ -38,6 +40,10 @@ def mock_dependencies():
         mock_predict.return_value = mock_df
         mock_apply_rules.return_value = mock_df
 
+        # Default string path values for visualization mocks
+        mock_plot_timeline.return_value = "predictions/visualizations/wc2026/wc2026_probability_timeline.png"
+        mock_gen_top10.return_value = "predictions/visualizations/wc2026/wc2026_top10_by_snapshot.csv"
+
         yield {
             "initialize": mock_init,
             "reset_snapshots": mock_reset_snapshots,
@@ -48,12 +54,52 @@ def mock_dependencies():
             "build_probability_timeline": mock_build_timeline,
             "update_pipeline": mock_update_pipeline,
             "match_result": mock_match_result,
+            "plot_team_probability_timeline": mock_plot_timeline,
+            "generate_top_10_by_snapshot": mock_gen_top10,
             "config": mock_config,
+            "predictions_df": mock_df,
         }
 
 
+# =====================================================================
+# 1. CORE PIPELINE FUNCTION: run_live_prediction()
+# =====================================================================
+
+def test_run_live_prediction_returns_and_calls_stage_2c(mock_dependencies):
+    """Verify run_live_prediction returns the 4 expected outputs and triggers ML/Viz functions."""
+    deps = mock_dependencies
+    config = deps["config"]
+
+    # Explicit stub return paths
+    deps["save_prediction_snapshot"].return_value = "snapshots/wc2026/snapshot_001.csv"
+    deps["plot_team_probability_timeline"].return_value = "visualizations/wc2026/timeline.png"
+    deps["generate_top_10_by_snapshot"].return_value = "visualizations/wc2026/top10.csv"
+
+    # Execute target logic directly
+    outputs = run_live_prediction(config)
+
+    # Validate output dictionary payload requirements
+    assert isinstance(outputs, dict)
+    assert outputs["predictions"] == deps["predictions_df"]
+    assert outputs["snapshot_path"] == "snapshots/wc2026/snapshot_001.csv"
+    assert outputs["timeline_chart_path"] == "visualizations/wc2026/timeline.png"
+    assert outputs["top_10_path"] == "visualizations/wc2026/top10.csv"
+
+    # Validate orchestration triggers
+    deps["predict_dataset"].assert_called_once_with(config.output_features, model_name="xgboost")
+    deps["apply_live_probability_rules"].assert_called_once_with(deps["predictions_df"], config.state_file)
+    deps["save_prediction_snapshot"].assert_called_once()
+    deps["build_probability_timeline"].assert_called_once_with(edition="wc2026")
+    deps["plot_team_probability_timeline"].assert_called_once_with(edition="wc2026")
+    deps["generate_top_10_by_snapshot"].assert_called_once_with(edition="wc2026")
+
+
+# =====================================================================
+# 2. CLI SUB-COMMAND ROUTE: --init
+# =====================================================================
+
 def test_cli_init_command_flow(mock_dependencies):
-    """Verify --init creates/resets state, outputs pre-tournament snapshots and timeline."""
+    """Verify --init creates/resets state, outputs pre-tournament snapshots, timelines, and Stage 2C charts."""
     deps = mock_dependencies
     
     # Configure snapshots paths behavior
@@ -61,7 +107,6 @@ def test_cli_init_command_flow(mock_dependencies):
     
     # Mock behavior of building the initial timeline dataframe
     def side_effect_build_timeline(edition):
-        # Simulate creating the timeline file structure
         df = pd.DataFrame(columns=["Team", "snapshot_001_pre_tournament"])
         df.to_csv(f"data/{edition}_timeline.csv", index=False)
 
@@ -76,7 +121,7 @@ def test_cli_init_command_flow(mock_dependencies):
     ):
         main()
 
-    # 1. Verify initialization lifecycle triggers
+    # 1. Verify initialization lifecycle triggers and output resets
     deps["initialize"].assert_called_once_with("wc2026")
     deps["reset_snapshots"].assert_called_once_with("wc2026")
 
@@ -84,13 +129,21 @@ def test_cli_init_command_flow(mock_dependencies):
     deps["save_prediction_snapshot"].assert_called_once()
     assert deps["save_prediction_snapshot"].return_value.endswith("snapshot_001_pre_tournament.csv")
 
-    # 3. Verify timeline generation file was initialized
+    # 3. Verify initial timeline creation
     deps["build_probability_timeline"].assert_called_once_with(edition="wc2026")
     mock_to_csv.assert_called_once()
 
+    # 4. Verify initial Stage 2C visualization output tracks generated
+    deps["plot_team_probability_timeline"].assert_called_once_with(edition="wc2026")
+    deps["generate_top_10_by_snapshot"].assert_called_once_with(edition="wc2026")
+
+
+# =====================================================================
+# 3. CLI SUB-COMMAND ROUTE: --result
+# =====================================================================
 
 def test_cli_result_command_flow(mock_dependencies):
-    """Verify --result processes matches, produces next snapshots, updates timeline tracking, and handles knockouts."""
+    """Verify --result processes matches, produces next snapshots, updates timeline tracking, and refreshes viz outputs."""
     deps = mock_dependencies
 
     # Setup specific mock state simulating an incoming round of 16 knockout match
@@ -108,7 +161,7 @@ def test_cli_result_command_flow(mock_dependencies):
         df = pd.DataFrame({
             "Team": ["TeamA", "TeamB"],
             "snapshot_001_pre_tournament": [0.50, 0.50],
-            "snapshot_002_match_001": [0.85, 0.00] # TeamB drops to zero
+            "snapshot_002_match_001": [0.85, 0.00]
         })
         df.to_csv(f"data/{edition}_timeline.csv", index=False)
 
@@ -132,7 +185,7 @@ def test_cli_result_command_flow(mock_dependencies):
     ):
         main()
 
-    # 4. Verify match context compilation and processing execution
+    # 1. Verify match context compilation and processing execution
     deps["match_result"].assert_called_once_with(
         home_team="TeamA",
         away_team="TeamB",
@@ -147,13 +200,22 @@ def test_cli_result_command_flow(mock_dependencies):
         match=deps["match_result"].return_value
     )
 
-    # 5. Verify the step generated the accurate chronological snapshot
+    # 2. Verify dataset calculations re-run live predictions
+    deps["predict_dataset"].assert_called_once()
+
+    # 3. Verify the step generated the accurate chronological snapshot
     assert deps["save_prediction_snapshot"].return_value.endswith("snapshot_002_match_001.csv")
 
-    # 6. Verify timeline file modifications for new snapshot columns
+    # 4. Verify timeline file modifications for new snapshot columns
     deps["build_probability_timeline"].assert_called_once_with(edition="wc2026")
     mock_to_csv.assert_called_once()
 
-    # 7. Core critical metrics validation assertions
-    assert len(mock_state["completed_matches"]) == 1  # completed_matches count == 1
-    assert "TeamB" in mock_state["eliminated_teams"]  # eliminated_teams contains loser for r16
+    # 5. Verify visualization charts (PNG images) updated to capture current progression
+    deps["plot_team_probability_timeline"].assert_called_once_with(edition="wc2026")
+
+    # 6. Verify top-10 favorite tracking lists updated into output CSV files
+    deps["generate_top_10_by_snapshot"].assert_called_once_with(edition="wc2026")
+
+    # Core state data validation assertions
+    assert len(mock_state["completed_matches"]) == 1
+    assert "TeamB" in mock_state["eliminated_teams"]

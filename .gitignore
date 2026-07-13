@@ -10,6 +10,7 @@ venv/
 # Generated prediction outputs
 predictions/snapshots/
 predictions/timelines/
+predictions/visualizations/
 predictions/*_predictions.csv
 
 # Live generated tournament state

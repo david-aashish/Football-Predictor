@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 SNAPSHOT_DIR = Path("predictions/snapshots")
+VISUALIZATION_DIR = Path("predictions/visualizations")
 
 
 def get_next_snapshot_number(edition):
@@ -60,3 +61,10 @@ def reset_snapshots(edition):
 
     if timeline_file.exists():
         timeline_file.unlink()
+
+    visualization_dir = VISUALIZATION_DIR / edition
+
+    if visualization_dir.exists():
+        for visualization_file in visualization_dir.iterdir():
+            if visualization_file.is_file():
+                visualization_file.unlink()

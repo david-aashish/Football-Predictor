@@ -304,3 +304,9 @@ New 5-Step Routine:-
 5. Merge: Once the status check turns green, click the Merge pull request button on GitHub to safely pull the verified code into main.
 
 With this we are **DONE** with *Stage 2B* 
+
+Decision 022:
+**Note — To Be Implemented:**
+When the interactive dashboard is developed, connect it to the existing snapshot, timeline, and visualization pipeline so charts and top-10 rankings refresh automatically after every processed match.
+
+With this we are **DONE** with *Stage 2C*
