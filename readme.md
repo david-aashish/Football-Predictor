@@ -77,11 +77,19 @@ Implemented:
 
 ---
 
-## ⏳ Stage 2C — Visualization
+## ✅ Stage 2C — Visualization
 
-Planned
+Completed
 
-Visualize how championship probabilities evolve throughout the tournament.
+Implemented:
+
+- Champion probability timeline generation
+- Automatic probability timeline chart
+- Top-10 favorites after every prediction snapshot
+- Automatic visualization refresh after every live match
+- CLI visualization interface
+- Edition-aware visualization outputs
+- Unit and integration testing
 
 ---
 
@@ -173,7 +181,7 @@ Features include:
 - Host Nation
 - Confederation
 
-Live tournament features generated during Stage 2A are used during Stage 2B to dynamically re-run the trained models after every completed match. The models are not retrained during the tournament; instead, updated features are passed through the existing Stage 1 models.
+Live tournament features generated during Stage 2 are used to dynamically re-run the trained models after every completed match. The models are not retrained during the tournament; instead, updated features are passed through the existing Stage 1 models. Stage 2 visualizes these evolving championship probabilities through automatically generated timelines and summary tables.
 
 ---
 
@@ -218,9 +226,11 @@ Current capabilities:
 - Generate updated feature datasets
 - Dynamically recalculate championship probabilities
 - Apply elimination-aware probability normalization
-- Save prediction snapshots after every match
-- Generate team probability timelines
-- Replay completed matches
+- Save prediction snapshots
+- Generate probability timelines
+- Generate probability timeline charts
+- Generate top-10 favorites tables
+- Automatically refresh visualizations after every live update
 - Support future tournaments via configuration
 
 ---
@@ -236,12 +246,15 @@ FIFA Predictor/
 │
 ├── live/
 │   ├── adapters/
-|   |   ├── cli.py
-|   |   └── batch_csv.py
+│   │   ├── cli.py
+│   │   ├── batch_csv.py
+│   │   └── visualize.py
+│   │
 │   ├── pipeline.py
 │   ├── prediction.py
 │   ├── snapshot.py
 │   ├── timeline.py
+│   ├── visualization.py
 │   ├── state.py
 │   ├── elo.py
 │   ├── form.py
@@ -257,17 +270,20 @@ FIFA Predictor/
 │
 ├── predictions/
 │   ├── snapshots/
-│   └── timelines/
+│   │   └── {edition}/
+│   ├── timelines/
+│   └── visualizations/
+│       └── {edition}/
 │
 ├── tournaments/
 │   └── wc2026.yaml
 │
 ├── tests/
+│   ├── integration_tests/
+│   └── unit_tests/
 │
 ├── utils/
-│
 ├── scripts/
-│
 ├── saved_models/
 │
 ├── data_sources.md
@@ -293,7 +309,7 @@ Compare models
 python -m models.compare_models
 ```
 
-Predict the 2026 World Cup
+Generate championship predictions
 
 ```bash
 python -m models.predict
@@ -344,25 +360,49 @@ python -m live.adapters.batch_csv \
 --file data/raw/batch_matches.csv
 ```
 
-Generated outputs:-
+Generate visualizations:
+
+Visualization outputs are refreshed automatically after every live match update.
+
+The visualization CLI can also be used to regenerate charts and tables manually whenever required.
+
+```bash
+python -m live.adapters.visualize \
+--edition wc2026 \
+--all
+```
 
 Stage 2 automatically generates:
 
 ```text
 predictions/
+
 ├── snapshots/
-│   ├── wc2026_snapshot_001_pre_tournament.csv
-│   ├── wc2026_snapshot_002_match_001.csv
-│   └── ...
-│
-└── timelines/
-    └── wc2026_probability_timeline.csv
+│   └── wc2026/
+│       ├── wc2026_snapshot_001_pre_tournament.csv
+│       ├── wc2026_snapshot_002_match_001.csv
+│       └── ...
+
+├── timelines/
+│   └── wc2026_probability_timeline.csv
+
+└── visualizations/
+    └── wc2026/
+        ├── wc2026_probability_timeline.png
+        └── wc2026_top10_by_snapshot.csv
+```
 
 ---
 
 # Testing
 
-Stages 2A and 2B include comprehensive unit and integration tests covering the live tournament engine, dynamic prediction pipeline, snapshot generation, and probability timeline creation.
+Stages 2A, 2B and 2C include comprehensive unit and integration tests covering:
+
+- Live tournament engine
+- Dynamic prediction pipeline
+- Snapshot generation
+- Probability timeline creation
+- Visualization generation
 
 Run all tests:
 
@@ -388,7 +428,7 @@ python -m pytest
 
 The project will continue toward a complete AI-powered World Cup prediction platform including:
 
-- Probability visualization
+- Probability visualization dashboard
 - Match prediction
 - Monte Carlo tournament simulation
 - AI explanations

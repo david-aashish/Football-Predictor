@@ -35,9 +35,9 @@ def main():
 
     matches = pd.read_csv(args.file)
 
-    for _, (_, row) in enumerate(
+    for match_number, (_, row) in enumerate(
         matches.iterrows(),
-        start=1
+        start=1,
     ):
         match = MatchResult(
             home_team=row["home_team"],
@@ -56,10 +56,22 @@ def main():
             match=match,
         )
 
-        run_live_prediction(config)
+        outputs = run_live_prediction(config)
+
+        print("=" * 60)
+        print(f"Processed match {match_number}/{len(matches)}")
+        print(
+            f"{match.home_team} {match.home_goals} - "
+            f"{match.away_goals} {match.away_team}"
+        )
+        print(f"Snapshot:     {outputs['snapshot_path']}")
+        print(f"Timeline PNG: {outputs['timeline_chart_path']}")
+        print(f"Top 10 table: {outputs['top_10_path']}")
+        print("=" * 60)
 
     print()
     print(f"Processed {len(matches)} matches.")
+
 
 if __name__ == "__main__":
     main()
